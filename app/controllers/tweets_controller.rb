@@ -20,7 +20,23 @@ def destroy
    tweet.destroy
  end
 end
- 
+
+def edit
+   @tweet = Tweet.find(params[:id])
+end
+
+    def update
+      tweet = Tweet.find(params[:id])
+      if tweet.user_id == current_user.id
+        tweet.update(tweet_params)
+      end
+    end
+
+  def show
+    @tweet = Tweet.find(params[:id])
+    @comments = @tweet.comments.includes(:user)
+  end
+
 private
 def tweet_params
   params.permit(:image, :text)
